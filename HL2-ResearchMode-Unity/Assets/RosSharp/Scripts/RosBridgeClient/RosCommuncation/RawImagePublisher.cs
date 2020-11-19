@@ -33,12 +33,12 @@ namespace RosSharp.RosBridgeClient
         public int resolutionHeight = 480;
         //public RMPlugin RMsource;
         //public Text textOut;
-        public int Type;
         private MessageTypes.Sensor.Image message;
 
         private byte[] frameData = null;
 
-
+        public enum SensorType { GrayL, GrayR, Depth_AHAT, Depth_LT1, Depth_LT2,RGB };
+        public SensorType sensorType;
 
         protected override void Start()
         {
@@ -55,10 +55,10 @@ namespace RosSharp.RosBridgeClient
         }
         private void Process()
         {
-            if(DataUpdated(Type))
+            if(DataUpdated())
             { 
-                UpdateMessage(Type);
-                ResetFlag(Type);
+                UpdateMessage();
+                ResetFlag();
             }
         }
 
@@ -80,59 +80,69 @@ namespace RosSharp.RosBridgeClient
             message.header.frame_id = FrameId;
             message.height = (uint)resolutionHeight;
             message.width = (uint)resolutionWidth;
-            message.encoding = "mono8";
+            if (sensorType == SensorType.RGB)
+            { message.encoding = "rgba8"; }
+            else
+            { message.encoding = "mono8"; }
+               
             message.step = (uint)resolutionWidth;
             message.data = new byte[resolutionWidth * resolutionHeight];
         }
 
-        private void UpdateMessage(int m_Type)
+        private void UpdateMessage()
         {
             message.header.Update();
             
 
-            if (m_Type == 1)
+            if (sensorType == SensorType.GrayL)
             { message.data = RMPlugin.GrayScale1frameData; }
-            else if (m_Type == 2)
+            else if (sensorType == SensorType.GrayR)
             { message.data = RMPlugin.GrayScale2frameData; }
-            else if (m_Type == 3)
+            else if (sensorType == SensorType.Depth_AHAT)
             { message.data = RMPlugin.Depth1frameData; }
-            else if (m_Type == 4)
-            { }
-            else if (m_Type == 5)
+            else if (sensorType == SensorType.Depth_LT1)
             { message.data = RMPlugin.Depth1frameData; }
-            else if (m_Type == 6)
+            else if (sensorType == SensorType.Depth_LT2)
             { message.data = RMPlugin.Depth2frameData; }
+            else if (sensorType == SensorType.RGB)
+            { message.data = VideoPanelApp._latestImageBytes; }
+
+
             Publish(message);
         }
 
-        private bool DataUpdated(int m_Type)
+        private bool DataUpdated()
         {
-            if (m_Type == 1)
+            if (sensorType == SensorType.GrayL)
             { return RMPlugin.GrayScale1Updated; }
-            else if (m_Type == 2)
+            else if (sensorType == SensorType.GrayR)
             { return RMPlugin.GrayScale2Updated; }
-            else if (m_Type == 3)
+            else if (sensorType == SensorType.Depth_AHAT)
             { return RMPlugin.Depth1Updated; }
-            else if (m_Type == 4)
-            { return false; }
-            else if (m_Type == 5)
+            else if (sensorType == SensorType.Depth_LT1)
             { return RMPlugin.Depth1Updated; }
-            else if (m_Type == 6)
+            else if (sensorType == SensorType.Depth_LT2)
             { return RMPlugin.Depth2Updated; }
+            else if (sensorType == SensorType.RGB)
+            { return VideoPanelApp.RGBUpdated; }
             else
             { return false; }
         }
 
-        private void ResetFlag(int m_Type)
+        private void ResetFlag()
         {
-            if (m_Type == 1)
+            if (sensorType == SensorType.GrayL)
             { RMPlugin.GrayScale1Updated = false; }
-            else if (m_Type == 2)
+            else if (sensorType == SensorType.GrayR)
             { RMPlugin.GrayScale2Updated = false; }
-            else if (m_Type == 3)
+            else if (sensorType == SensorType.Depth_AHAT)
             { RMPlugin.Depth1Updated = false; }
-            else if (m_Type == 4)
-            { }
+            else if (sensorType == SensorType.Depth_LT1)
+            { RMPlugin.Depth1Updated = false; }
+            else if (sensorType == SensorType.Depth_LT2)
+            { RMPlugin.Depth2Updated = false; }
+            else if (sensorType == SensorType.RGB)
+            { VideoPanelApp.RGBUpdated = true; }
             else
             { }
         }

@@ -44,11 +44,11 @@ public class RMPlugin : MonoBehaviour
     public static bool Depth2Updated = false;
     public static bool IMUUpdated = false;
 
-    private bool GrayScale1Enabled = true;
-    private bool GrayScale2Enabled = true;
-    private bool DepthEnabled = true;
+    public bool GrayScale1Enabled = true;
+    public bool GrayScale2Enabled = true;
+    public bool DepthEnabled = true;
     private bool Depth2Enabled = true;
-    private bool IMUEnabled = true;
+    public bool IMUEnabled = true;
 
     public static float[] Acc ;
     public static float[] Gyro ;
@@ -360,7 +360,7 @@ public class RMPlugin : MonoBehaviour
         RawImagePublisher[] RawImagePublishers = GameObject.Find("RosSharp").GetComponents<RawImagePublisher>();
         foreach (RawImagePublisher rawImagePublisher in RawImagePublishers)
         {
-            if (rawImagePublisher.Type == 1)
+            if (rawImagePublisher.sensorType == RawImagePublisher.SensorType.GrayL)
             {
                 rawImagePublisher.enabled = !rawImagePublisher.enabled;
             }
@@ -372,7 +372,7 @@ public class RMPlugin : MonoBehaviour
         RawImagePublisher[] RawImagePublishers = GameObject.Find("RosSharp").GetComponents<RawImagePublisher>();
         foreach (RawImagePublisher rawImagePublisher in RawImagePublishers)
         {
-            if (rawImagePublisher.Type == 2)
+            if (rawImagePublisher.sensorType == RawImagePublisher.SensorType.GrayR)
             {
                 rawImagePublisher.enabled = !rawImagePublisher.enabled;
             }
@@ -384,15 +384,15 @@ public class RMPlugin : MonoBehaviour
         RawImagePublisher[] RawImagePublishers = GameObject.Find("RosSharp").GetComponents<RawImagePublisher>();
         foreach (RawImagePublisher rawImagePublisher in RawImagePublishers)
         {
-            if (rawImagePublisher.Type == 3)
+            if (rawImagePublisher.sensorType == RawImagePublisher.SensorType.Depth_AHAT)
             {
                 rawImagePublisher.enabled = !rawImagePublisher.enabled;
             }
-            if (rawImagePublisher.Type == 5)
+            else if (rawImagePublisher.sensorType == RawImagePublisher.SensorType.Depth_LT1)
             {
                 rawImagePublisher.enabled = !rawImagePublisher.enabled;
             }
-            if (rawImagePublisher.Type == 6)
+            else if (rawImagePublisher.sensorType == RawImagePublisher.SensorType.Depth_LT2)
             {
                 rawImagePublisher.enabled = !rawImagePublisher.enabled;
             }

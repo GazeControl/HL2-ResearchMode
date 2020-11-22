@@ -8,6 +8,7 @@ This tutorials below will show you how to deploy the Unity sample app to HL2 dev
 1. Visual Studio with Unity supported.
 2. Unity 2019.4.2f1 in Windows system with UWP supported.
 3. Ros melodic in ubuntu system as a server.
+4. Register insider program to the HL2 device, update HL2 system, turn on research mode switch in device portal(not recording mode).
 * More details about Installing tools for Hololens2 can be found at [this Microsoft official document.](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/install-the-tools?tabs=unity)
 
 ## Deploy app to Hololens2 device
@@ -29,12 +30,12 @@ This tutorials below will show you how to deploy the Unity sample app to HL2 dev
 * This plugin is a UWP windows runtime component pulgin, it only works in Hololens2 device. There is no way to use it in Unity Editor directly.
 
 # Attention
-1. If you are building the Unity project yourself, make sure to check the following setting.(If you are build your own project)
+1. If you are building the Unity project yourself, make sure to check the following setting.
    * Build platform is Universal Windows Platform.
    * Target and platform are set to `Hololens` and `ARM64`.
    * Windows Mixed Reality XR setting(not plugin) is activated in Player settings.
    * more details can be found at [related Microsoft doc.](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/configure-unity-project)
-2. Be sure to add new package and capability to `Package.appxmanifest` file.
+2. Be sure to add new package and capability to `Package.appxmanifest` file after the first build. The settings in the file will not be refreshed so you do not need to change it after the first time.
 
 # Content
 There are 3 major parts in this project.

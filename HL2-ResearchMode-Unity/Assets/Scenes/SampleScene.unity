@@ -1068,7 +1068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &262142184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,6 +1543,7 @@ GameObject:
   - component: {fileID: 720723720}
   - component: {fileID: 720723716}
   - component: {fileID: 720723713}
+  - component: {fileID: 720723722}
   m_Layer: 0
   m_Name: RosSharp
   m_TagString: Untagged
@@ -1557,7 +1558,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720723712}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: edaecbeeda9f95a46aafd23c6b1d5362, type: 3}
   m_Name: 
@@ -1697,6 +1698,25 @@ MonoBehaviour:
   resolutionWidth: 320
   resolutionHeight: 288
   sensorType: 3
+--- !u!114 &720723722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720723712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a908e83b1e7ce9e428caae2838615cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Topic: /HL2/RGBC/compressed
+  FrameId: Camera
+  resolutionWidth: 896
+  resolutionHeight: 504
+  qualityLevel: 20
+  previewPlane: {fileID: 262142183}
+  rawImage: {fileID: 1472952545}
 --- !u!1 &721509760
 GameObject:
   m_ObjectHideFlags: 0

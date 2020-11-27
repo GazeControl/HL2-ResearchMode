@@ -22,7 +22,7 @@ public class VideoPanelApp : MonoBehaviour
     HoloLensCameraStream.Resolution _resolution;
 
     //"Injected" objects.
-    //VideoPanel _videoPanelUI;
+    VideoPanel _videoPanelUI;
     HoloLensCameraStream.VideoCapture _videoCapture;
 
     IntPtr _spatialCoordinateSystemPtr; 
@@ -37,7 +37,7 @@ public class VideoPanelApp : MonoBehaviour
         //You could also do this "shortcut":
         //CameraStreamManager.Instance.GetVideoCaptureAsync(v => videoCapture = v);
 
-        //_videoPanelUI = GameObject.FindObjectOfType<VideoPanel>();
+        _videoPanelUI = GameObject.FindObjectOfType<VideoPanel>();
     }
 
     private void OnDestroy()
@@ -77,7 +77,7 @@ public class VideoPanelApp : MonoBehaviour
         cameraParams.enableHolograms = false;
 
         UnityEngine.WSA.Application.InvokeOnAppThread(() => { 
-            //_videoPanelUI.SetResolution(_resolution.width, _resolution.height); 
+            _videoPanelUI.SetResolution(_resolution.width, _resolution.height); 
         }, false);
 
         videoCapture.StartVideoModeAsync(cameraParams, OnVideoModeStarted);
@@ -123,7 +123,7 @@ public class VideoPanelApp : MonoBehaviour
         //This is where we actually use the image data
         UnityEngine.WSA.Application.InvokeOnAppThread(() =>
         {
-            //_videoPanelUI.SetBytes(_latestImageBytes);
+            _videoPanelUI.SetBytes(_latestImageBytes);
             //text.text = _resolution.width + "x"+ _resolution.height+"+"+ _latestImageBytes.Length;
             RGBUpdated = true;
         }, false);

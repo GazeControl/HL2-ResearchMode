@@ -41,6 +41,7 @@ namespace RosSharp.RosBridgeClient
         private Material mediaMaterial ;
         private Texture2D mediaTexture = null;
         private byte[] frameData = null;
+        public RawImage rawImage;
 
 
 
@@ -52,7 +53,7 @@ namespace RosSharp.RosBridgeClient
 
 
             
-            mediaMaterial = previewPlane.GetComponent<MeshRenderer>().material;
+            //mediaMaterial = previewPlane.GetComponent<MeshRenderer>().material;
         }
         private void Update()
         {
@@ -73,11 +74,11 @@ namespace RosSharp.RosBridgeClient
 
         private void InitializeGameObject()
         {
-            texture2D = new Texture2D(resolutionWidth, resolutionHeight);
+           // texture2D = new Texture2D(resolutionWidth, resolutionHeight);
             //rect = new Rect(0, 0, resolutionWidth, resolutionHeight);
             //ImageCamera.targetTexture = new RenderTexture(resolutionWidth, resolutionHeight, 24);
 
-            mediaMaterial = previewPlane.GetComponent<MeshRenderer>().material;
+            //mediaMaterial = previewPlane.GetComponent<MeshRenderer>().material;
             //texture2D= (Texture2D)mediaMaterial.mainTexture;
         }
 
@@ -91,8 +92,10 @@ namespace RosSharp.RosBridgeClient
         private void UpdateMessage()
         {
             message.header.Update();
-            texture2D=duplicateTexture((Texture2D)mediaMaterial.mainTexture);
-            message.data = texture2D.EncodeToJPG(qualityLevel);
+            //texture2D=duplicateTexture((Texture2D)mediaMaterial.mainTexture);
+            //message.data = texture2D.EncodeToJPG(qualityLevel);
+            
+            message.data= ImageConversion.EncodeToJPG(rawImage.texture as Texture2D, qualityLevel);
             //Texto.text = "UPdate~";
             Publish(message);
         }

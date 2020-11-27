@@ -82,6 +82,7 @@ namespace RosSharp.RosBridgeClient
             message.width = (uint)resolutionWidth;
             if (sensorType == SensorType.RGB)
             { message.encoding = "rgba8"; }
+            //{ message.encoding = "rgb8"; }
             else
             { message.encoding = "mono8"; }
                

@@ -22,7 +22,9 @@ namespace RosSharp.RosBridgeClient
 {
     public class PoseStampedPublisher : UnityPublisher<MessageTypes.Geometry.PoseStamped>
     {
-        public Transform PublishedTransform;
+        public Transform Device;
+        public Transform World;
+
         public string FrameId = "Unity";
 
         private MessageTypes.Geometry.PoseStamped message;
@@ -52,8 +54,13 @@ namespace RosSharp.RosBridgeClient
         private void UpdateMessage()
         {
             message.header.Update();
-            GetGeometryPoint(PublishedTransform.position.Unity2Ros(), message.pose.position);
-            GetGeometryQuaternion(PublishedTransform.rotation.Unity2Ros(), message.pose.orientation);
+            var relativePosition= World.InverseTransformPoint(Device.position);
+            Quaternion relativeRotation = Quaternion.Inverse(World.rotation) * Device.rotation;
+            //Debug.Log(relativePosition);
+            //Debug.Log(relativeRotation);
+            //Debug.Log(Device.rotation);
+            GetGeometryPoint(relativePosition.Unity2Ros(), message.pose.position);
+            GetGeometryQuaternion(relativeRotation.Unity2Ros(), message.pose.orientation);
 
             Publish(message);
         }

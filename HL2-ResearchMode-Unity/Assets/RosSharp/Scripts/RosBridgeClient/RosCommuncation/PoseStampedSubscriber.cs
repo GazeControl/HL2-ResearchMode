@@ -19,7 +19,8 @@ namespace RosSharp.RosBridgeClient
 {
     public class PoseStampedSubscriber : UnitySubscriber<MessageTypes.Geometry.PoseStamped>
     {
-        public Transform PublishedTransform;
+        public Transform WorldObject;
+        public Transform SandboxObject;
 
         private Vector3 position;
         private Quaternion rotation;
@@ -45,8 +46,10 @@ namespace RosSharp.RosBridgeClient
 
         private void ProcessMessage()
         {
-            PublishedTransform.position = position;
-            PublishedTransform.rotation = rotation;
+            WorldObject.localPosition = position;
+            WorldObject.localRotation = rotation;
+            SandboxObject.localPosition = position;
+            SandboxObject.localRotation = rotation;
         }
 
         private Vector3 GetPosition(MessageTypes.Geometry.PoseStamped message)
